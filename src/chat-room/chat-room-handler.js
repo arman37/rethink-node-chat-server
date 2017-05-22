@@ -24,6 +24,21 @@ let createRoom = (name, created_by) => {
   );
 };
 
+/**
+ * Get a list of all chat rooms.
+ *
+ * @returns {*}
+ */
+let getRoomList = () => {
+  return (
+    ChatRoom
+      .then((rooms) => {
+        return rooms;
+      })
+  );
+};
+
 module.exports = {
-  createRoom: createRoom
+  createRoom: createRoom,
+  getRoomList: getRoomList
 };

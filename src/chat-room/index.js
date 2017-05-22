@@ -34,6 +34,20 @@ exports.register = (server, options, next) => {
           });
       }
     },
+    {
+      method: 'GET',
+      path: '/api/v1/room',
+      handler: (req, reply) => {
+        chatRoomHandler
+          .getRoomList()
+          .then((rooms) => {
+            reply(rooms);
+          })
+          .catch((err) => {
+            reply(err);
+          });
+      }
+    }
   ]);
 
   next();

@@ -35,9 +35,6 @@ let getUser = (userId) => {
   return (
     User
       .get(userId)
-      .getJoin({
-        message: true
-      })
       .then((user) => {
         return user;
       })
