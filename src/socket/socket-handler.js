@@ -53,7 +53,27 @@ let onCreateNewRoom = (feed) => {
   });
 };
 
+let onNewMessage = (feed) => {
+  feed.each((err, model) => {
+    if(err) {
+      console.log(err);
+      process.exit(1);
+    }
+
+    require('../user/user-handler')
+      .getUser(model.from)
+      .then((user) => {
+        model.user = user;
+        io.sockets.emit(appConstant.New_MESSAGE, model);
+      })
+      .catch((err) => {
+        console.log(err)
+      });
+  });
+};
+
 module.exports = {
-  onConnection: onConnection,
-  onCreateNewRoom: onCreateNewRoom
+  onConnection,
+  onNewMessage,
+  onCreateNewRoom,
 }

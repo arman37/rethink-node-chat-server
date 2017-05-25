@@ -17,7 +17,17 @@ const ChatRoom = require('./chat-room');
 const models = require('./models');
 
 const server = new Hapi.Server();
-server.connection({ port: process.env.PORT || Config.hapi.port, labels: ['api'], routes: { cors: true } });
+server.connection({
+  port: process.env.PORT || Config.hapi.port,
+  labels: ['api'],
+  routes: {
+    cors: {
+      origin: ['*'],
+      maxAge: 600,
+      headers: ['Accept', 'Content-Type', 'Authorization', 'room']
+    }
+  }
+});
 server.connection({ port: Config.socket.port, labels: ['chat'] });
 
 let goodOptions = {

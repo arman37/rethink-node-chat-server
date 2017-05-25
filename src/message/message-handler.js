@@ -35,8 +35,10 @@ let getMessage = (roomId) => {
   return (
     Message
       .filter({room: roomId})
+      .getJoin({user: true})
       .skip(0)
-      .limit(10)
+      .limit(1000)
+      .orderBy('createdAt')
       .then((messages) => {
         return messages;
       })
