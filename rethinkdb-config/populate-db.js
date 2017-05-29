@@ -4,6 +4,7 @@
  *
  */
 'use strict';
+const bcrypt = require('bcrypt');
 
 module.exports = () => {
     const {User, Message, ChatRoom} = require('../src/models');
