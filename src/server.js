@@ -8,6 +8,7 @@
 const Hapi = require('hapi');
 const Good = require('good');
 const Blipp = require('blipp');
+const JWTAuth = require('hapi-auth-jwt');
 
 const User = require('./user');
 const Config = require('./config');
@@ -65,14 +66,21 @@ server.register(
         User,
         Message,
         ChatRoom,
-        Socket
-    ],
-    function (err) {
-        if (err) {
-            throw err;
-        }
-    }
-);
+        Socket,
+        JWTAuth
+    ]
+  )
+  .then(() => {
+    server
+      .auth
+      .strategy('jwt', 'jwt', {
+        key: Config.jwt.key,
+        verifyOptions: { algorithms: ['HS256'] }
+      });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 server.start(function (err) {
     if (err) {

@@ -16,5 +16,8 @@ module.exports = {
     },
     socket: {
         port: 5000
-    }
+    },
+  jwt: {
+      key: 'secret_key'
+  }
 };

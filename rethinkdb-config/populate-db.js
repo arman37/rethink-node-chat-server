@@ -12,11 +12,11 @@ module.exports = () => {
     return Promise.all([
       {
         username: 'user1',
-        password: '123456',
+        password: bcrypt.hashSync('123456', 8),
       },
       {
         username: 'user2',
-        password: 'abcdef'
+        password: bcrypt.hashSync('abcdef', 8)
       }
     ].map((user) => {
         console.log('Saving ', user.username, '...');

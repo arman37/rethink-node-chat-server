@@ -8,6 +8,7 @@
 const Joi = require('joi');
 const appConstant = require('../app-constant');
 const userHandler = require('./user-handler');
+const createToken = require('../token');
 
 exports.register = (server, options, next) => {
   server.route([
@@ -20,14 +21,17 @@ exports.register = (server, options, next) => {
             username: Joi.string().trim().min(3).max(20).required(),
             password: Joi.string().trim().min(6).max(30).required()
           }
-        }
+        },
+        pre: [
+          { method: userHandler.verifyUniqueUser }
+        ],
       },
       handler: (req, reply) => {
         let {username, password} = req.payload;
         userHandler
           .saveUser(username, password)
           .then((user) => {
-            reply(user).created(`/api/v1/sign-up/${user.id}`);
+            reply({token: createToken(user)});
           })
           .catch((err) => {
             reply(err);
@@ -35,6 +39,24 @@ exports.register = (server, options, next) => {
         console.log(req.payload);
       }
     },
+    {
+      method: 'POST',
+      path: '/api/v1/authenticate',
+      config: {
+        validate: {
+          payload: {
+            username: Joi.string().trim().min(3).max(20).required(),
+            password: Joi.string().trim().min(6).max(30).required()
+          }
+        },
+        pre: [
+          { method: userHandler.verifyCredentials }
+        ],
+      },
+      handler: (req, reply) => {
+        reply({ token: createToken(req.user) });
+      }
+    }
   ]);
 
   next();
