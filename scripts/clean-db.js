@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const thinky = require('../src/thinky');
-const config = require('./config');
+const thinky = require('../src/thinky/index');
+const config = require('./../rethinkdb-config/config');
 const r = thinky.r;
 
 module.exports = () => {
