@@ -6,7 +6,7 @@
 'use strict';
 
 const cleanDB = require('./../scripts/clean-db');
-const populateDB = require('./populate-db');
+const populateDB = require('./../scripts/populate-db');
 
 Promise
     .resolve(cleanDB())

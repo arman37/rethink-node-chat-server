@@ -7,7 +7,7 @@
 const bcrypt = require('bcrypt');
 
 module.exports = () => {
-    const {User, Message, ChatRoom} = require('../src/models');
+    const {User, Message, ChatRoom} = require('../src/models/index');
 
     console.log('Started populating DB...');
     return Promise.all([
