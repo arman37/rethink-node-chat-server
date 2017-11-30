@@ -39,8 +39,10 @@ exports.register = (server, options, next) => {
       method: 'GET',
       path: '/api/v1/message',
       handler: (req, reply) => {
+        let roomId = req.query.roomId;
+
         messageHandler
-          .getMessage(req.headers.room)
+          .getMessage(roomId)
           .then((messages) => {
             reply(messages);
           })
