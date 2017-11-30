@@ -49,7 +49,7 @@ let onCreateNewRoom = (feed) => {
       process.exit(1);
     }
 
-    io.sockets.emit(appConstant.NEW_ROOM, model);
+    io && io.sockets.emit(appConstant.NEW_ROOM, model);
   });
 };
 
@@ -76,4 +76,4 @@ module.exports = {
   onConnection,
   onNewMessage,
   onCreateNewRoom,
-}
+};
