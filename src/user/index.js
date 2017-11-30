@@ -14,8 +14,9 @@ exports.register = (server, options, next) => {
   server.route([
     {
       method: 'POST',
-      path: '/api/v1/sign-up',
+      path: '/api/v1/users/actions/sign-up',
       config: {
+        auth: false,
         validate: {
           payload: {
             username: Joi.string().trim().min(3).max(20).required(),
@@ -28,6 +29,7 @@ exports.register = (server, options, next) => {
       },
       handler: (req, reply) => {
         let {username, password} = req.payload;
+
         userHandler
           .saveUser(username, password)
           .then((user) => {
@@ -41,8 +43,9 @@ exports.register = (server, options, next) => {
     },
     {
       method: 'POST',
-      path: '/api/v1/authenticate',
+      path: '/api/v1/users/actions/login',
       config: {
+        auth: false,
         validate: {
           payload: {
             username: Joi.string().trim().min(3).max(20).required(),

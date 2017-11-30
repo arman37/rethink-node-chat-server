@@ -8,8 +8,8 @@
 const Hapi = require('hapi');
 const Good = require('good');
 const Blipp = require('blipp');
-const JWTAuth = require('hapi-auth-jwt');
 
+const Auth = require('./auth');
 const User = require('./user');
 const Config = require('./config');
 const Socket = require('./socket');
@@ -29,63 +29,56 @@ server.connection({
     }
   }
 });
+
 server.connection({ port: Config.socket.port, labels: ['chat'] });
 
 let goodOptions = {
-    includes: {
-        request: ['payload']
-    },
-    reporters: {
-        console: [
-            {
-                module: 'good-squeeze',
-                name: 'Squeeze',
-                args: [{ log: '*', response: '*', request: '*', error: '*' }]
-            },
-            {
-                module: 'white-out',
-                args: [{
-                    password: 'censor'
-                }]
-            },
-            {
-                module: 'good-console'
-            },
-            'stdout'
-        ]
-    }
+  includes: {
+    request: ['payload']
+  },
+  reporters: {
+    console: [
+      {
+          module: 'good-squeeze',
+          name: 'Squeeze',
+          args: [{ log: '*', response: '*', request: '*', error: '*' }]
+      },
+      {
+          module: 'white-out',
+          args: [{
+              password: 'censor'
+          }]
+      },
+      {
+          module: 'good-console'
+      },
+      'stdout'
+    ]
+  }
 };
 
 server.register(
     [
-        {
-            register: Good,
-            options: goodOptions
-        },
-        Blipp,
-        User,
-        Message,
-        ChatRoom,
-        Socket,
-        JWTAuth
+      {
+          register: Good,
+          options: goodOptions
+      },
+      Auth,
+      Blipp,
+      User,
+      Message,
+      ChatRoom,
+      Socket
     ]
   )
-  .then(() => {
-    server
-      .auth
-      .strategy('jwt', 'jwt', {
-        key: Config.jwt.key,
-        verifyOptions: { algorithms: ['HS256'] }
-      });
-  })
   .catch((err) => {
     console.log(err);
   });
 
 server.start(function (err) {
-    if (err) {
-        throw err;
-    }
-    server.log(['info'], `API Server running at port: ${server.connections[0].info.uri}`);
-    server.log(['info'], `Chat Server running at port: ${server.connections[1].info.uri}`);
+  if (err) {
+      throw err;
+  }
+  server.log(['info'], `API Server running at port: ${server.connections[0].info.uri}`);
+  server.log(['info'], `Chat Server running at port: ${server.connections[1].info.uri}`);
 });

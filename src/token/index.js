@@ -6,8 +6,10 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
-const config = require('../config');
 
 module.exports = (user) => {
-  return jwt.sign({ id: user.id, username: user.username}, config.jwt.key, { algorithm: 'HS256', expiresIn: "1h" } );
+  const secretKey = process.env.JWT || 'stubJWT';
+  const options = {id: user.id, username: user.username};
+
+  return jwt.sign(options, secretKey, { expiresIn: '18h' });
 };
