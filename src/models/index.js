@@ -8,6 +8,7 @@
 const User = require('./user');
 const Message = require('./message');
 const ChatRoom = require('./chat-room');
+const socketHandler = require('../socket/socket-handler');
 
 /**
  * Relate ChatRoom to the Message
@@ -48,6 +49,15 @@ User.hasAndBelongsToMany(ChatRoom, 'room', 'id', 'id');
  * @param  {string}  id - user primary key
  */
 ChatRoom.hasAndBelongsToMany(User, 'user', 'id', 'id');
+
+// add change feed listeners
+ChatRoom
+  .changes()
+  .then(socketHandler.onCreateNewRoom);
+
+Message
+  .changes()
+  .then(socketHandler.onNewMessage);
 
 module.exports = {
   User: User,

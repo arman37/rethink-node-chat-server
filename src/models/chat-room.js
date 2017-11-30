@@ -9,8 +9,6 @@ const thinky = require('../thinky');
 const type = thinky.type;
 const r = thinky.r;
 
-const socketHandler = require('../socket/socket-handler');
-
 const ChatRoom = thinky.createModel("chat_rooms", {
   name: type.string().min(3).max(16).required(),
   created_by: type.string().required(),
@@ -18,7 +16,5 @@ const ChatRoom = thinky.createModel("chat_rooms", {
 });
 
 ChatRoom.ensureIndex("createdAt");
-
-ChatRoom.changes().then(socketHandler.onCreateNewRoom);
 
 module.exports = ChatRoom;
