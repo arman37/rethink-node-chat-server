@@ -7,7 +7,7 @@
 
 module.exports = {
     development: {
-        host: "172.17.0.2",
+        host: "127.0.0.1",
         port: 28015,
         db: 'rethinkchat'
     },
