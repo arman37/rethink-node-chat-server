@@ -12,7 +12,7 @@ const r = thinky.r;
 module.exports = () => {
     console.log('Searching for table names...');
     return r
-    .db(config[process.env.NODE_ENV].db)
+    .db(config[process.env.NODE_ENV.trim()].db)
     .tableList()
     .run()
     .then((tables) => {
