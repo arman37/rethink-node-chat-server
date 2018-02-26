@@ -19,7 +19,7 @@ module.exports = () => {
         console.log('Found table list: ', tables, '\n Started dropping tables if exists any...');
         return Promise.all(tables.map((table) => {
             console.log('Dropping table: ', table);
-            return r.db(config[process.env.NODE_ENV].db).tableDrop(table).run();
+            return r.db(config[process.env.NODE_ENV.trim()].db).tableDrop(table).run();
         }));
     })
     .then((results) => {
