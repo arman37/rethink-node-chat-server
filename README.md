@@ -23,3 +23,12 @@ HOW TO RUN
 5. Run `npm start` to start the server.
 
 API server will start at 'http://localhost:3030' and chat server(socket) will start at 'http://localhost:5000' but you will have to configure the chat client app at 'https://github.com/arman37/rethink-node-chat-client' to see how the API & Socket work.
+
+
+
+Npm Command Previews
+========
+![Screenshot1](/screenshots/screenshot1.png)
+![Screenshot2](/screenshots/screenshot2.png)
+
+
