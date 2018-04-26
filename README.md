@@ -32,3 +32,6 @@ Npm Command Previews
 ![Screenshot2](/screenshots/screenshot2.png)
 
 
+### License
+
+[MIT licensed](./LICENSE)
