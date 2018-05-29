@@ -36,6 +36,8 @@ Npm Command Previews
 ![Screenshot1](/screenshots/screenshot1.png)
 ![Screenshot2](/screenshots/screenshot2.png)
 
+### Contributing
+If you like the project, shoot a :star2: and feel free to fork & send PR anytime.
 
 ### License
 
